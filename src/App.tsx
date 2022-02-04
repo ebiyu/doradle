@@ -15,8 +15,51 @@ function App() {
   );
   const [list, setList] = useState<string[]>([]);
 
+  const Modal = () => {
+    const shareString =
+      "Doradle\n" + list.map((pie) => (pie === ans ? "🟩" : "⬜")).join("\n");
+    console.log({ shareString });
+
+    const shareLink = `https://twitter.com/share?text=${encodeURIComponent(
+      shareString
+    )}`;
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          margin: "auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            width: 500,
+            padding: 10,
+            border: "black solid 2px",
+            borderRadius: 5,
+            textAlign: "center",
+          }}
+        >
+          <h2>Clear</h2>
+          <div>{list.length}</div>
+          <a href={shareLink} target="_blank" rel="noreferrer">
+            Share
+          </a>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="App">
+      {list.includes(ans) && <Modal />}
       <h1 style={{ textAlign: "center" }}>Doradle</h1>
       <header className="App-header">
         {list.map((pie, i) => (
